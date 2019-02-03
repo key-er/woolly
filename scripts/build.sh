@@ -6,4 +6,4 @@ docker tag woo "$DOCKER_USERNAME"/woolly:woo
 docker images
 docker run -d -p 80:8080 --name woo "$DOCKER_USERNAME"/woolly:woo
 docker container ls
-# docker exec -it  /bin/sh -c "npm test"
+docker exec -it woo /bin/sh -c "npm test"
