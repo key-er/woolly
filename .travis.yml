@@ -1,14 +1,23 @@
 language: node_js
 services:
 - docker
-before_install:
-- docker build -t cybercuffs/woolly:woo .
-- docker run -d -p 80:8080 --name  go-helloworld cybercuffs/woolly:woo
-- docker exec -it go-helloworld /bin/sh -c "cd tests; go test"
-script:
-- docker ps | grep -q woo
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: build
+      script: ./scripts/build.sh
+    - stage: test
+      script: ./scripts/test.sh
+    - stage: deploy
+      script: ./scripts/deploy.sh
+      
+# before_install:
+# - docker build -t cybercuffs/woolly:woo .
+# - docker run -d -p 80:8080 --name  woo cybercuffs/woolly:woo
+# - docker exec -it woo /bin/sh -c "cd tests; go test"
+# script:
+# - docker ps | grep -q woo
+# deploy:
+#   provider: script
+#   script: bash deploy.sh
+#   on:
+#     branch: master
